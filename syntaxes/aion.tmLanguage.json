@@ -2,24 +2,45 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "Aion",
 	"patterns": [
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		},
-		{
-			"include": "#comments"
-		}
-	
-		
+		{ "include": "#comments" },
+		{ "include": "#strings" },
+		{ "include": "#keywords" },
+		{ "include": "#constants" },
+		{ "include": "#types" },
+		{ "include": "#builtins" },
+		{ "include": "#numbers" },
+		{ "include": "#operators" },
+		{ "include": "#function-definition" },
+		{ "include": "#function-call" },
+		{ "include": "#module-call" },
+		{ "include": "#import-statement" },
+		{ "include": "#punctuation" }
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.aion",
-				"match": "\\b(if|while|event|task|pomodoro)\\b"
-			}]
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.aion",
+					"begin": "//",
+					"beginCaptures": {
+						"0": { "name": "punctuation.definition.comment.aion" }
+					},
+					"end": "$\\n?",
+					"patterns": []
+				},
+				{
+					"name": "comment.block.aion",
+					"begin": "/\\*",
+					"beginCaptures": {
+						"0": { "name": "punctuation.definition.comment.begin.aion" }
+					},
+					"end": "\\*/",
+					"endCaptures": {
+						"0": { "name": "punctuation.definition.comment.end.aion" }
+					},
+					"patterns": []
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.aion",
@@ -32,35 +53,134 @@
 				}
 			]
 		},
-		
-		"comments": {
+		"keywords": {
 			"patterns": [
 				{
-					"name": "comment.line.double-slash.aion",
-					"begin": "//",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment.aion"
-						}
-					},
-					"end": "$\\n?",
-					"patterns": []
+					"name": "keyword.control.aion",
+					"match": "\\b(if|else|while|import|return|break|continue)\\b"
 				},
 				{
-					"name": "comment.block.aion",
-					"begin": "/\\*",
-					"beginCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment.begin.aion"
-						}
-					},
-					"end": "\\*/",
-					"endCaptures": {
-						"0": {
-							"name": "punctuation.definition.comment.end.aion"
-						}
-					},
-					"patterns": []
+					"name": "storage.type.function.aion",
+					"match": "\\b(fn)\\b"
+				}
+			]
+		},
+		"constants": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.aion",
+					"match": "\\b(true|false)\\b"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"name": "support.type.aion",
+					"match": "\\b(Int|Float|Bool|String)\\b"
+				}
+			]
+		},
+		"builtins": {
+			"patterns": [
+				{
+					"name": "support.function.builtin.aion",
+					"match": "\\b(print|println|panic|alloc|free)\\b(?=\\s*\\()"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.float.aion",
+					"match": "\\b[0-9]+\\.[0-9]*\\b|\\b[0-9]*\\.[0-9]+\\b"
+				},
+				{
+					"name": "constant.numeric.integer.aion",
+					"match": "\\b[0-9]+\\b"
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.comparison.aion",
+					"match": "==|!=|<=|>=|<|>"
+				},
+				{
+					"name": "keyword.operator.assignment.compound.aion",
+					"match": "\\+=|-=|\\.="
+				},
+				{
+					"name": "keyword.operator.assignment.aion",
+					"match": "::=|:=|="
+				},
+				{
+					"name": "keyword.operator.arithmetic.aion",
+					"match": "\\+|-"
+				},
+				{
+					"name": "keyword.operator.type-annotation.aion",
+					"match": ":"
+				}
+			]
+		},
+		"function-definition": {
+			"patterns": [
+				{
+					"match": "\\b(fn)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+					"captures": {
+						"1": { "name": "storage.type.function.aion" },
+						"2": { "name": "entity.name.function.aion" }
+					}
+				}
+			]
+		},
+		"function-call": {
+			"patterns": [
+				{
+					"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+					"captures": {
+						"1": { "name": "entity.name.function.call.aion" }
+					}
+				}
+			]
+		},
+		"module-call": {
+			"patterns": [
+				{
+					"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\.([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+					"captures": {
+						"1": { "name": "entity.name.namespace.aion" },
+						"2": { "name": "entity.name.function.aion" }
+					}
+				}
+			]
+		},
+		"import-statement": {
+			"patterns": [
+				{
+					"match": "\\b(import)\\s+([a-zA-Z_][a-zA-Z0-9_.]*)",
+					"captures": {
+						"1": { "name": "keyword.control.import.aion" },
+						"2": { "name": "entity.name.namespace.aion" }
+					}
+				}
+			]
+		},
+		"punctuation": {
+			"patterns": [
+				{
+					"name": "punctuation.separator.dot.aion",
+					"match": "\\."
+				},
+				{
+					"name": "punctuation.terminator.semicolon.aion",
+					"match": ";"
+				},
+				{
+					"name": "punctuation.separator.comma.aion",
+					"match": ","
 				}
 			]
 		}
