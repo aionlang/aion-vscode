@@ -6,6 +6,7 @@ const { registerCommands } = require('./commands');
 const { provider } = require('./tasks');
 const { formatText, isMissing } = require('./compiler');
 const { getBinary, reportMissing, resetMissing } = require('./environment');
+const { definitionProvider } = require('./navigation');
 
 const checkOnSave = () => vscode.workspace.getConfiguration('aion').get('check.run', 'onSave') === 'onSave';
 
@@ -42,6 +43,7 @@ function activate(context) {
     ...registerCommands(checker),
     vscode.tasks.registerTaskProvider('aion', provider),
     vscode.languages.registerDocumentFormattingEditProvider('aion', formatter(log)),
+    vscode.languages.registerDefinitionProvider({ language: 'aion', scheme: 'file' }, definitionProvider()),
 
     vscode.workspace.onDidSaveTextDocument((document) => {
       if (isAion(document) && checkOnSave()) checker.check(document);

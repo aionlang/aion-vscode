@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+- Go to Definition for functions, types, interfaces, enums and their variants, variables, parameters, fields, methods and imports.
+
 ## 0.1.0
 
 First release.

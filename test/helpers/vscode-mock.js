@@ -21,6 +21,12 @@ class Range {
   }
 }
 
+class Location {
+  constructor(uri, range) {
+    Object.assign(this, { uri, range });
+  }
+}
+
 class Diagnostic {
   constructor(range, message, severity) {
     Object.assign(this, { range, message, severity });
@@ -46,6 +52,7 @@ function create(config = {}) {
     terminals: [],
     sent: [],
     formatters: [],
+    definitionProviders: [],
     taskProviders: [],
     listeners: {},
     config,
@@ -59,6 +66,7 @@ function create(config = {}) {
   const vscode = {
     Position,
     Range,
+    Location,
     Diagnostic,
     Uri,
     Disposable: class {},
@@ -121,6 +129,10 @@ function create(config = {}) {
       }),
       registerDocumentFormattingEditProvider: (language, provider) => {
         state.formatters.push({ language, provider });
+        return disposable;
+      },
+      registerDefinitionProvider: (selector, provider) => {
+        state.definitionProviders.push({ selector, provider });
         return disposable;
       },
     },

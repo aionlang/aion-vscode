@@ -3,6 +3,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { create, install, aionDocument } = require('./helpers/vscode-mock');
 
@@ -209,4 +210,30 @@ test('formatting without a compiler asks the user to set it up and changes nothi
   const edits = await state.formatters[0].provider.provideDocumentFormattingEdits(aionDocument(main, 'x := 1  \n'));
   assert.deepEqual(edits, []);
   assert.equal(state.warnings.length, 1);
+});
+
+test('Go to Definition leads from a use to its declaration, here or in an imported file', (t) => {
+  const { state, vscode, modules, restore } = load();
+  t.after(restore);
+  modules.extension.activate({ subscriptions: [] });
+  const { selector, provider } = state.definitionProviders[0];
+  assert.deepEqual(selector, { language: 'aion', scheme: 'file' });
+
+  const folder = fs.mkdtempSync(path.join(os.tmpdir(), 'aion-goto-'));
+  t.after(() => fs.rmSync(folder, { recursive: true, force: true }));
+  fs.writeFileSync(path.join(folder, 'shapes.aion'), 'type Circle(r: Float)\n');
+  const file = path.join(folder, 'main.aion');
+  const document = aionDocument(file, 'import shapes\n\nfn area(c: shapes.Circle) = 1\narea(shapes.Circle(2.0))\n');
+
+  const here = provider.provideDefinition(document, new vscode.Position(3, 1)); // `area` in the call
+  assert.equal(here.length, 1);
+  assert.equal(here[0].uri.fsPath, file);
+  assert.deepEqual([here[0].range.start.line, here[0].range.start.character, here[0].range.end.character], [2, 3, 7]);
+
+  const there = provider.provideDefinition(document, new vscode.Position(3, 14)); // `Circle` in `shapes.Circle(`
+  assert.equal(there.length, 1);
+  assert.equal(there[0].uri.fsPath, path.join(folder, 'shapes.aion'));
+  assert.deepEqual([there[0].range.start.line, there[0].range.start.character], [0, 5]);
+
+  assert.deepEqual(provider.provideDefinition(document, new vscode.Position(1, 0)), []); // a blank line
 });
