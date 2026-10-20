@@ -67,3 +67,10 @@ test('formatText rejects with the compiler message when fmt fails', async () => 
     fs.rmSync(wrapper, { force: true });
   }
 });
+
+test('a run that takes too long is stopped', async () => {
+  const started = Date.now();
+  const result = await run(process.execPath, ['-e', 'setTimeout(() => {}, 30000)'], { timeout: 200 });
+  assert.ok(Date.now() - started < 5000);
+  assert.notEqual(result.code, 0);
+});
