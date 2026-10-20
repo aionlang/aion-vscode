@@ -13,6 +13,7 @@ test('every file the manifest points at exists', () => {
   const { languages, grammars, snippets } = manifest.contributes;
   const files = [
     ...languages.map((l) => l.configuration),
+    ...languages.flatMap((l) => (l.icon ? [l.icon.light, l.icon.dark] : [])),
     ...grammars.map((g) => g.path),
     ...snippets.map((s) => s.path),
   ];
@@ -46,5 +47,14 @@ test('regular expressions in the language configuration compile', () => {
       ...Object.values((config.folding && config.folding.markers) || {}),
     ].filter(Boolean);
     for (const pattern of patterns) new RegExp(pattern);
+  }
+});
+
+test('both languages have a file icon that is a well-formed svg', () => {
+  for (const language of manifest.contributes.languages) {
+    assert.ok(language.icon, `${language.id} has no icon`);
+    const svg = fs.readFileSync(path.join(root, language.icon.light), 'utf8');
+    assert.match(svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg" viewBox="0 0 100 100"/);
+    assert.match(svg, /<\/svg>\s*$/);
   }
 });
