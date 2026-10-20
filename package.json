@@ -39,6 +39,13 @@
         "firstLine": "^#!.*\baion\b",
         "configuration": "./language-configuration.json"
       }
+    ],
+    "grammars": [
+      {
+        "language": "aion",
+        "scopeName": "source.aion",
+        "path": "./syntaxes/aion.tmLanguage.json"
+      }
     ]
   },
   "scripts": {
