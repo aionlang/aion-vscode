@@ -18,8 +18,8 @@ A VS Code extension for the [Aion language](https://github.com/aionlang/aion). I
 - `language-configuration.json`: comments, brackets, indentation.
 - `syntaxes/`: TextMate grammars for `.aion` files and `aion.project`.
 - `snippets/aion.json`: snippets.
-- `src/`: the extension code (`extension.js`, `diagnostics.js`, `commands.js`, `compiler.js`).
-- `test/`: tests run with `node --test`.
+- `src/`: the extension code. `extension.js` activates; `commands.js`, `tasks.js`, `diagnostics.js` and `environment.js` use the `vscode` API; `compiler.js` (running `aion`), `checkOutput.js` (reading `aion check`) and `template.js` (the run command variables) do not, so they are tested directly.
+- `test/`: tests run with `node --test`. `test/helpers/vscode-mock.js` stands in for the `vscode` module.
 
 The language itself is defined by the compiler in the `aion` repository (`src/syntax/lexer.rs`, `src/syntax/parser.rs`) and `docs/language.md`. When the language changes, update the grammar to match.
 
