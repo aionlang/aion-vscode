@@ -1,0 +1,47 @@
+{
+  "name": "aion",
+  "displayName": "Aion",
+  "description": "Language support for Aion: syntax highlighting, snippets, diagnostics and commands.",
+  "version": "0.1.0",
+  "publisher": "aionlang",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aionlang/aion-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aionlang/aion-vscode/issues"
+  },
+  "homepage": "https://github.com/aionlang/aion-vscode#readme",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "aion",
+    "language",
+    "syntax"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "aion",
+        "aliases": [
+          "Aion",
+          "aion"
+        ],
+        "extensions": [
+          ".aion"
+        ],
+        "firstLine": "^#!.*\baion\b",
+        "configuration": "./language-configuration.json"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node --test test/"
+  }
+}
