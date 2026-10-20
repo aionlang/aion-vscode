@@ -49,6 +49,10 @@
     ]
   },
   "scripts": {
-    "test": "node --test test/"
+    "test": "node --test \"test/*.test.js\""
+  },
+  "devDependencies": {
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.1.0"
   }
 }
