@@ -1,0 +1,9 @@
+.vscode/**
+.github/**
+test/**
+node_modules/**
+CLAUDE.md
+package-lock.json
+.gitattributes
+.gitignore
+**/*.vsix
