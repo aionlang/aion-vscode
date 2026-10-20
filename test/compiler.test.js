@@ -50,11 +50,25 @@ test('formatText returns what fmt wrote', async () => {
   assert.equal(formatted, 'x := 1\nprintln(x)\n');
 });
 
-test('formatText cleans up after itself', async () => {
-  const before = fs.readdirSync(os.tmpdir()).filter((n) => n.startsWith('aion-fmt-')).length;
+test('formatText cleans up after itself', async (t) => {
+  // Its own temporary directory: test files run side by side, and the formatting in another of
+  // them would show up in the shared one.
+  const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'aion-scratch-'));
+  const saved = {};
+  for (const name of ['TMPDIR', 'TMP', 'TEMP']) {
+    saved[name] = process.env[name];
+    process.env[name] = scratch;
+  }
+  t.after(() => {
+    for (const [name, value] of Object.entries(saved)) {
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    }
+    fs.rmSync(scratch, { recursive: true, force: true });
+  });
+
   await formatText(process.execPath, 'a\n', [fake]);
-  const after = fs.readdirSync(os.tmpdir()).filter((n) => n.startsWith('aion-fmt-')).length;
-  assert.equal(after, before);
+  assert.deepEqual(fs.readdirSync(scratch), []);
 });
 
 test('formatText rejects with the compiler message when fmt fails', async () => {
