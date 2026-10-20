@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="16" height="16">
+  <title>Aion project</title>
+  <defs>
+    <mask id="gap" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+      <rect width="100" height="100" fill="#fff"/>
+      <circle cx="74" cy="26" r="26.5" fill="#000"/>
+    </mask>
+  </defs>
+  <g mask="url(#gap)">
+    <g fill="#4377df" fill-rule="evenodd" transform="translate(3 14) scale(0.098592) translate(-73 -14)">
+      <path d="M73 15H817L598 344H292Z"/>
+      <path d="M292 445H598L817 865H649L622 814H267L241 865H73ZM405 550L323 707H566L484 550Z"/>
+    </g>
+  </g>
+  <path fill="#8b949e" fill-rule="evenodd" d="M75.41 8.06L78.31 3.41L81.11 4.13L81.41 9.59L87.69 14.31L93.02 13.07L94.49 15.56L90.84 19.64L91.94 27.41L96.59 30.31L95.87 33.11L90.41 33.41L85.69 39.69L86.93 45.02L84.44 46.49L80.36 42.84L72.59 43.94L69.69 48.59L66.89 47.87L66.59 42.41L60.31 37.69L54.98 38.93L53.51 36.44L57.16 32.36L56.06 24.59L51.41 21.69L52.13 18.89L57.59 18.59L62.31 12.31L61.07 6.98L63.56 5.51L67.64 9.16ZM81 26A7 7 0 1 0 67 26A7 7 0 1 0 81 26Z"/>
+</svg>
