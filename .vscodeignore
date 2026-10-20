@@ -1,6 +1,7 @@
 .vscode/**
 .github/**
 test/**
+scripts/**
 node_modules/**
 CLAUDE.md
 package-lock.json
