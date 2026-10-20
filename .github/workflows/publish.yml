@@ -1,0 +1,40 @@
+name: Publish
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # the grammar test tokenizes every program of the compiler repository
+      - uses: actions/checkout@v4
+        with:
+          repository: aionlang/aion
+          path: aion-compiler
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Check the tag matches package.json
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "tag $GITHUB_REF_NAME does not match package.json version $version"
+            exit 1
+          fi
+      - run: npm ci
+      - run: npm test
+        env:
+          AION_REPO: ${{ github.workspace }}/aion-compiler
+      - run: npx --yes @vscode/vsce@3.2.1 package --no-dependencies --out aion.vsix
+      - name: Publish to the Visual Studio Marketplace
+        run: npx --yes @vscode/vsce@3.2.1 publish --packagePath aion.vsix -p "$VSCE_PAT"
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aion-vsix
+          path: aion.vsix
