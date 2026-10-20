@@ -219,7 +219,69 @@
           "description": "When to type-check Aion files."
         }
       }
-    }
+    },
+    "taskDefinitions": [
+      {
+        "type": "aion",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "enum": [
+              "run",
+              "build",
+              "check",
+              "test"
+            ],
+            "description": "The aion command to run."
+          },
+          "file": {
+            "type": "string",
+            "description": "The Aion file. Left out, the project is used."
+          },
+          "flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Compiler options, placed before the file."
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Arguments for the program (with run)."
+          }
+        }
+      }
+    ],
+    "problemMatchers": [
+      {
+        "name": "aion",
+        "owner": "aion",
+        "source": "aion",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}"
+        ],
+        "pattern": [
+          {
+            "regexp": "^(error|warning): (.*)$",
+            "severity": 1,
+            "message": 2
+          },
+          {
+            "regexp": "^\\s*--> (.+):(\\d+):(\\d+)\\s*$",
+            "file": 1,
+            "line": 2,
+            "column": 3
+          }
+        ]
+      }
+    ]
   },
   "scripts": {
     "test": "node --test \"test/*.test.js\""
