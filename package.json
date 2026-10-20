@@ -289,5 +289,11 @@
   "devDependencies": {
     "vscode-oniguruma": "^2.0.1",
     "vscode-textmate": "^9.1.0"
-  }
+  },
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onLanguage:aion",
+    "onCommand:aion.repl",
+    "onCommand:aion.test"
+  ]
 }
