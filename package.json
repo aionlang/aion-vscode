@@ -3,7 +3,7 @@
   "displayName": "Aion",
   "description": "Language support for Aion: syntax highlighting, snippets, diagnostics and commands.",
   "version": "0.1.0",
-  "publisher": "aionlang",
+  "publisher": "aionlanguage",
   "icon": "icons/icon.png",
   "galleryBanner": {
     "color": "#101826",
