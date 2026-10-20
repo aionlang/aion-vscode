@@ -14,9 +14,13 @@ const isAion = (document) => document.languageId === 'aion' && document.uri.sche
  * the same file can take them back.
  */
 class Checker {
-  /** @param {vscode.OutputChannel} log */
-  constructor(log) {
+  /**
+   * @param {vscode.OutputChannel} log
+   * @param {typeof run} [runner]  how to run the compiler; tests give a stand-in
+   */
+  constructor(log, runner = run) {
     this.log = log;
+    this.run = runner;
     this.collection = vscode.languages.createDiagnosticCollection('aion');
     /** @type {Map<string, AbortController>} runs in progress, by file */
     this.running = new Map();
@@ -33,7 +37,7 @@ class Checker {
     this.running.set(key, controller);
 
     const cwd = path.dirname(document.fileName);
-    const result = await run(getBinary(), ['check', document.fileName], {
+    const result = await this.run(getBinary(), ['check', document.fileName], {
       cwd,
       timeout: 60000,
       signal: controller.signal,
