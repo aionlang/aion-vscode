@@ -1,5 +1,5 @@
 {
-  "name": "aion",
+  "name": "aion-support",
   "displayName": "Aion",
   "description": "Language support for Aion: syntax highlighting, snippets, diagnostics and commands.",
   "version": "0.1.3",
