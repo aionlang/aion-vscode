@@ -36,12 +36,13 @@ function run(binary, args, options = {}) {
         cwd: options.cwd,
         windowsHide: true,
         signal: options.signal,
-        timeout: options.timeout,
       });
     } catch (failure) {
       resolve({ code: null, output: '', failure });
       return;
     }
+    // spawn's own `timeout` option leaves its timer running when the process never starts
+    const timer = options.timeout ? setTimeout(() => child.kill(), options.timeout) : undefined;
     let stdout = '';
     let stderr = '';
     let failure;
@@ -52,7 +53,10 @@ function run(binary, args, options = {}) {
       if (e.name !== 'AbortError') failure = e;
     });
     // a process that never started still closes, with an errno for a status
-    child.on('close', (code) => resolve({ code: failure ? null : code, output: stdout + stderr, failure }));
+    child.on('close', (code) => {
+      clearTimeout(timer);
+      resolve({ code: failure ? null : code, output: stdout + stderr, failure });
+    });
   });
 }
 
