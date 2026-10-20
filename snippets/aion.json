@@ -1,0 +1,167 @@
+{
+  "Function": {
+    "prefix": "fn",
+    "body": ["fn ${1:name}(${2}) {", "\t$0", "}"],
+    "description": "A function"
+  },
+  "Function with a result": {
+    "prefix": "fnr",
+    "body": ["fn ${1:name}(${2}) -> ${3:Int} {", "\t$0", "}"],
+    "description": "A function that returns a value"
+  },
+  "One-line function": {
+    "prefix": "fn1",
+    "body": "fn ${1:name}(${2}) = $0",
+    "description": "A function whose body is one expression"
+  },
+  "Main": {
+    "prefix": "main",
+    "body": ["fn main() {", "\t$0", "}"],
+    "description": "The main function"
+  },
+  "Method on a type": {
+    "prefix": "fnx",
+    "body": ["fn ${1:String}.${2:name}(${3}) = $0"],
+    "description": "A method added to an existing type"
+  },
+  "Type": {
+    "prefix": "type",
+    "body": ["type ${1:Name}(${2:field: String}) {", "\t$0", "}"],
+    "description": "A type with a primary constructor"
+  },
+  "Data type": {
+    "prefix": "data",
+    "body": "data type ${1:Name}(${2:x: Int, y: Int})",
+    "description": "A data type: equality, copy and destructuring included"
+  },
+  "Open type": {
+    "prefix": "opentype",
+    "body": ["open type ${1:Name}(${2}) {", "\topen fn ${3:name}() = $0", "}"],
+    "description": "A type that can be extended"
+  },
+  "Subtype": {
+    "prefix": "subtype",
+    "body": ["type ${1:Name}(${2:name: String}) : ${3:Parent}(${4:name}) {", "\toverride fn ${5:method}() = $0", "}"],
+    "description": "A type that extends an open type"
+  },
+  "Interface": {
+    "prefix": "interface",
+    "body": ["interface ${1:Name} {", "\tfn ${2:method}() -> ${3:String}", "}"],
+    "description": "An interface"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": ["enum ${1:Name} {", "\t${2:First}, ${3:Second}", "}"],
+    "description": "An enum"
+  },
+  "Constructor": {
+    "prefix": "constructor",
+    "body": ["constructor(${1}) {", "\t$0", "}"],
+    "description": "A secondary constructor"
+  },
+  "Static function": {
+    "prefix": "static",
+    "body": "static fn ${1:name}(${2}) = $0",
+    "description": "A function that belongs to the type"
+  },
+  "If": {
+    "prefix": "if",
+    "body": ["if ${1:condition} {", "\t$0", "}"],
+    "description": "if"
+  },
+  "If else": {
+    "prefix": "ifelse",
+    "body": ["if ${1:condition} {", "\t$2", "} else {", "\t$0", "}"],
+    "description": "if / else"
+  },
+  "When": {
+    "prefix": "when",
+    "body": ["when ${1:value} {", "\t${2:0} -> ${3:\"zero\"}", "\telse -> ${0:\"other\"}", "}"],
+    "description": "when with a subject"
+  },
+  "While": {
+    "prefix": "while",
+    "body": ["while ${1:condition} {", "\t$0", "}"],
+    "description": "while loop"
+  },
+  "For range": {
+    "prefix": "for",
+    "body": ["for ${1:i} in ${2:0}..${3:n} {", "\t$0", "}"],
+    "description": "Count over a range"
+  },
+  "For each": {
+    "prefix": "foreach",
+    "body": ["for ${1:item} in ${2:items} {", "\t$0", "}"],
+    "description": "Loop over a collection"
+  },
+  "Try catch": {
+    "prefix": "try",
+    "body": ["try {", "\t$1", "} catch ${2:e} {", "\t$0", "}"],
+    "description": "try / catch, which is an expression"
+  },
+  "Defer": {
+    "prefix": "defer",
+    "body": "defer ${0:cleanup()}",
+    "description": "Run code when the block is left"
+  },
+  "Print line": {
+    "prefix": "pl",
+    "body": "println($0)",
+    "description": "println"
+  },
+  "Variable": {
+    "prefix": "var",
+    "body": "${1:name} := ${0:value}",
+    "description": "Declare a variable, type inferred"
+  },
+  "Read-only variable": {
+    "prefix": "val",
+    "body": "val ${1:name} = ${0:value}",
+    "description": "Declare a variable that cannot be assigned again"
+  },
+  "Import": {
+    "prefix": "import",
+    "body": "import ${0:module}",
+    "description": "Import a module"
+  },
+  "From import": {
+    "prefix": "from",
+    "body": "from ${1:module} import ${0:Name}",
+    "description": "Import only some names of a module"
+  },
+  "Launch a task": {
+    "prefix": "launch",
+    "body": ["launch {", "\t$0", "}"],
+    "description": "Run a block as a task"
+  },
+  "Async task": {
+    "prefix": "async",
+    "body": "async { ${0:value} }",
+    "description": "Run a block as a task with a result"
+  },
+  "Thread": {
+    "prefix": "thread",
+    "body": ["thread {", "\t$0", "}"],
+    "description": "Run a block on its own thread"
+  },
+  "Select": {
+    "prefix": "select",
+    "body": ["select(", "\t${1:ch}.onReceive { ${2:v} -> $3 },", "\tonTimeout(${4:1000}) { $0 })"],
+    "description": "Wait for one of several channel operations"
+  },
+  "Assert equal": {
+    "prefix": "asserteq",
+    "body": "assertEq(${1:actual}, ${0:expected})",
+    "description": "assertEq"
+  },
+  "Region": {
+    "prefix": "region",
+    "body": ["// region ${1:name}", "$0", "// endregion"],
+    "description": "A foldable region"
+  },
+  "Doc comment": {
+    "prefix": "doc",
+    "body": ["/**", " * $0", " */"],
+    "description": "A documentation comment"
+  }
+}
