@@ -65,7 +65,7 @@
         {
           "name": "string.quoted.triple.aion",
           "begin": "\"\"\"",
-          "end": "\"\"\"",
+          "end": "\"{3,}",
           "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.aion" } },
           "endCaptures": { "0": { "name": "punctuation.definition.string.end.aion" } },
           "patterns": [{ "include": "#string-escape" }, { "include": "#interpolation" }]
@@ -73,7 +73,7 @@
         {
           "name": "string.quoted.other.raw.aion",
           "begin": "(?<![A-Za-z0-9_])r\"\"\"",
-          "end": "\"\"\"",
+          "end": "\"{3,}",
           "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.aion" } },
           "endCaptures": { "0": { "name": "punctuation.definition.string.end.aion" } }
         },
