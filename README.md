@@ -6,6 +6,7 @@ Language support for [Aion](https://github.com/aionlang/aion), the scripting-sty
 
 - **Syntax highlighting** for `.aion` files: comments (nested block comments and `/** */` docs), strings with `$name` and `${expr}` interpolation, triple-quoted and raw strings, characters, all number forms, declarations, types, operators and the standard library's built-ins.
 - **`aion.project`** is recognised by its exact file name and has its own highlighting.
+- **File icons**: the Aion logo for `.aion` files, and the logo with a gear for `aion.project`. They are used where the active file icon theme has no icon of its own for these files; a theme that does, such as Material Icon Theme, keeps its own.
 - **Problems** from `aion check`, shown in the editor when a file is opened or saved.
 - **Run Aion File**: a play button in the editor title bar (like the Python extension), the editor and explorer context menus, the command palette, and <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd> (<kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd> on macOS).
 - **Build Aion File**, **Check Aion File**, **Run Aion Tests** and **Open Aion REPL** commands.
@@ -63,6 +64,8 @@ npm test
 ```
 
 Open the folder in VS Code and press F5 to start an Extension Development Host. The extension is plain JavaScript with no build step. `npm test` also tokenizes every program in a neighbouring checkout of the Aion repository (`../aion`, or the path in `AION_REPO`) to check the grammar against real code.
+
+The icons come from `node scripts/make-icons.js`, which draws the logo and the gear into `icons/`.
 
 Package it with `npx @vscode/vsce package`.
 

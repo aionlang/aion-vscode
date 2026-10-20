@@ -6,6 +6,7 @@ First release.
 
 - Syntax highlighting for Aion and for `aion.project`.
 - Language configuration: comments, brackets, auto-closing pairs, indentation and folding.
+- File icons for `.aion` and `aion.project`.
 - Snippets.
 - Problems from `aion check` on open and save.
 - Run, build, check, test and REPL commands, the Run Aion File button, and a custom run command setting.
