@@ -2,7 +2,7 @@
   "name": "aion-support",
   "displayName": "Aion Support",
   "description": "Language support for Aion: syntax highlighting, snippets, diagnostics and commands.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "publisher": "aionlanguage",
   "icon": "icons/icon.png",
   "galleryBanner": {
