@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # the grammar test tokenizes every program of the compiler repository
+      - uses: actions/checkout@v4
+        with:
+          repository: aionlang/aion
+          path: aion-compiler
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+        env:
+          AION_REPO: ${{ github.workspace }}/aion-compiler
+      - run: npx --yes @vscode/vsce@3.2.1 package --no-dependencies
