@@ -65,7 +65,7 @@ npm test
 
 Open the folder in VS Code and press F5 to start an Extension Development Host. The extension is plain JavaScript with no build step. `npm test` also tokenizes every program in a neighbouring checkout of the Aion repository (`../aion`, or the path in `AION_REPO`) to check the grammar against real code.
 
-The icons come from `node scripts/make-icons.js`, which draws the logo and the gear into `icons/`.
+The icons come from `node scripts/make-icons.js`, which draws the logo and the gear into `icons/`, and renders `icons/icon.png`, the marketplace picture.
 
 Package it with `npx @vscode/vsce package`.
 
