@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+- Go to Definition follows imports into dependencies: `path` dependencies, and git dependencies downloaded into the project's `aion-dependencies/` folder by `aion install` (the folder is named in `packages` in `aion.project`, the commit comes from `aion.lock`). Git dependencies in the shared cache, and the dependencies of a dependency, are not followed.
+
 ## 0.2.0
 
 - Go to Definition for functions, types, interfaces, enums and their variants, variables, parameters, fields, methods and imports.
