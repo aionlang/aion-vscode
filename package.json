@@ -68,6 +68,107 @@
         "language": "aion",
         "path": "./snippets/aion.json"
       }
+    ],
+    "commands": [
+      {
+        "command": "aion.run",
+        "title": "Run Aion File",
+        "category": "Aion",
+        "icon": "$(play)"
+      },
+      {
+        "command": "aion.build",
+        "title": "Build Aion File",
+        "category": "Aion",
+        "icon": "$(package)"
+      },
+      {
+        "command": "aion.check",
+        "title": "Check Aion File",
+        "category": "Aion",
+        "icon": "$(check)"
+      },
+      {
+        "command": "aion.test",
+        "title": "Run Aion Tests",
+        "category": "Aion",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "aion.format",
+        "title": "Format Aion File",
+        "category": "Aion"
+      },
+      {
+        "command": "aion.repl",
+        "title": "Open Aion REPL",
+        "category": "Aion",
+        "icon": "$(terminal)"
+      }
+    ],
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "aion.run",
+          "when": "resourceLangId == aion",
+          "group": "navigation@0"
+        },
+        {
+          "command": "aion.build",
+          "when": "resourceLangId == aion",
+          "group": "navigation@1"
+        },
+        {
+          "command": "aion.check",
+          "when": "resourceLangId == aion",
+          "group": "navigation@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "aion.run",
+          "when": "resourceLangId == aion && resourceScheme == file",
+          "group": "navigation@100"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "aion.run",
+          "when": "resourceExtname == .aion",
+          "group": "6_aion@1"
+        },
+        {
+          "command": "aion.build",
+          "when": "resourceExtname == .aion",
+          "group": "6_aion@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "aion.run",
+          "when": "resourceLangId == aion"
+        },
+        {
+          "command": "aion.build",
+          "when": "resourceLangId == aion"
+        },
+        {
+          "command": "aion.check",
+          "when": "resourceLangId == aion"
+        },
+        {
+          "command": "aion.format",
+          "when": "resourceLangId == aion"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "aion.run",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r",
+        "when": "editorLangId == aion"
+      }
     ]
   },
   "scripts": {
