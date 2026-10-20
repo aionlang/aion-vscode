@@ -1,0 +1,104 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Aion Project",
+  "scopeName": "source.aion-project",
+  "fileTypes": [],
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#table" },
+    { "include": "#key" },
+    { "include": "#value" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.number-sign.aion-project",
+      "match": "(#).*$",
+      "captures": { "1": { "name": "punctuation.definition.comment.aion-project" } }
+    },
+    "table": {
+      "match": "^\\s*(\\[)\\s*([^\\]\\n]*?)\\s*(\\])",
+      "captures": {
+        "1": { "name": "punctuation.definition.table.begin.aion-project" },
+        "2": { "name": "entity.name.section.aion-project" },
+        "3": { "name": "punctuation.definition.table.end.aion-project" }
+      }
+    },
+    "key": {
+      "patterns": [
+        {
+          "name": "support.type.property-name.aion-project",
+          "match": "[A-Za-z_][A-Za-z0-9_.-]*(?=\\s*=)"
+        },
+        {
+          "match": "(\")([^\"\\n]*)(\")(?=\\s*=)",
+          "name": "support.type.property-name.aion-project"
+        }
+      ]
+    },
+    "value": {
+      "patterns": [
+        { "include": "#string" },
+        { "include": "#array" },
+        { "include": "#inline-table" },
+        {
+          "name": "constant.language.boolean.aion-project",
+          "match": "\\b(?:true|false)\\b"
+        },
+        {
+          "name": "constant.numeric.aion-project",
+          "match": "[-+]?\\d[\\d_]*(?:\\.\\d[\\d_]*)?(?:[eE][-+]?\\d+)?\\b"
+        },
+        {
+          "name": "keyword.operator.assignment.aion-project",
+          "match": "="
+        },
+        {
+          "name": "punctuation.separator.comma.aion-project",
+          "match": ","
+        }
+      ]
+    },
+    "string": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.aion-project",
+          "begin": "\"",
+          "end": "\"|$",
+          "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.aion-project" } },
+          "endCaptures": { "0": { "name": "punctuation.definition.string.end.aion-project" } },
+          "patterns": [
+            {
+              "name": "constant.character.escape.aion-project",
+              "match": "\\\\(?:[btnfr\"\\\\]|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})"
+            },
+            {
+              "name": "invalid.illegal.unknown-escape.aion-project",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.aion-project",
+          "begin": "'",
+          "end": "'|$",
+          "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.aion-project" } },
+          "endCaptures": { "0": { "name": "punctuation.definition.string.end.aion-project" } }
+        }
+      ]
+    },
+    "array": {
+      "begin": "\\[",
+      "end": "\\]",
+      "beginCaptures": { "0": { "name": "punctuation.definition.array.begin.aion-project" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.array.end.aion-project" } },
+      "patterns": [{ "include": "#comment" }, { "include": "#value" }]
+    },
+    "inline-table": {
+      "begin": "\\{",
+      "end": "\\}",
+      "beginCaptures": { "0": { "name": "punctuation.definition.table.inline.begin.aion-project" } },
+      "endCaptures": { "0": { "name": "punctuation.definition.table.inline.end.aion-project" } },
+      "patterns": [{ "include": "#comment" }, { "include": "#key" }, { "include": "#value" }]
+    }
+  }
+}
