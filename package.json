@@ -4,6 +4,11 @@
   "description": "Language support for Aion: syntax highlighting, snippets, diagnostics and commands.",
   "version": "0.1.0",
   "publisher": "aionlang",
+  "icon": "icons/icon.png",
+  "galleryBanner": {
+    "color": "#101826",
+    "theme": "dark"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -295,6 +300,7 @@
     "test": "node --test \"test/*.test.js\""
   },
   "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
     "vscode-oniguruma": "^2.0.1",
     "vscode-textmate": "^9.1.0"
   },

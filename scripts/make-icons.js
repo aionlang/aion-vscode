@@ -4,6 +4,9 @@
 //
 //     node scripts/make-icons.js
 //
+// It also writes icons/icon.png, the 256 x 256 picture for the marketplace listing (needs the
+// @resvg/resvg-js dev dependency).
+//
 // Both icons use the Aion logo (the two paths of docs/img/logo.svg in the compiler repository).
 // The project icon adds a gear in the top right corner and cuts a gap round it out of the logo, so
 // it reads on a light and a dark background alike.
@@ -91,8 +94,29 @@ ${LOGO.map((d) => `      <path d="${d}"/>`).join('\n')}
 `;
 }
 
+const BACKGROUND = '#101826';
+
+/** The logo on a dark rounded square, for the marketplace. */
+function marketplaceIcon() {
+  const { width } = logoGroup(0, 0, 176);
+  const placed = logoGroup((256 - width) / 2, 40, 176);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>Aion</title>
+  <rect width="256" height="256" rx="48" fill="${BACKGROUND}"/>
+  <g fill="${BLUE}" fill-rule="evenodd" transform="${placed.transform}">
+${LOGO.map((d) => `    <path d="${d}"/>`).join('\n')}
+  </g>
+</svg>
+`;
+}
+
 const dir = path.join(__dirname, '..', 'icons');
 fs.mkdirSync(dir, { recursive: true });
 fs.writeFileSync(path.join(dir, 'aion.svg'), fileIcon());
 fs.writeFileSync(path.join(dir, 'aion-project.svg'), projectIcon());
-console.log('wrote icons/aion.svg and icons/aion-project.svg');
+fs.writeFileSync(path.join(dir, 'icon.svg'), marketplaceIcon());
+
+const { Resvg } = require('@resvg/resvg-js');
+const png = new Resvg(marketplaceIcon(), { fitTo: { mode: 'width', value: 256 } }).render().asPng();
+fs.writeFileSync(path.join(dir, 'icon.png'), png);
+console.log('wrote icons/aion.svg, icons/aion-project.svg, icons/icon.svg and icons/icon.png');
