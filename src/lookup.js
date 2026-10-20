@@ -2,6 +2,7 @@
 
 const path = require('path');
 const { mask, scan } = require('./symbols');
+const { dependencyRoots } = require('./dependencies');
 
 const isWord = (c) => c !== undefined && /\w/.test(c);
 
@@ -35,8 +36,17 @@ function projectRoot(file, exists, fallback) {
   }
 }
 
-/** The file a module path stands for, as `import` looks for it; the standard library is not on disk. */
-function moduleFile(imp, names, from, { exists, root }) {
+/** The files that can hold the module `names` below `dir`. */
+function moduleCandidates(dir, names) {
+  const stem = path.join(dir, ...names);
+  return [`${stem}.aion`, path.join(stem, 'lib.aion'), path.join(stem, `${names.at(-1)}.aion`)];
+}
+
+/**
+ * The file a module path stands for, as `import` looks for it: next to the importer or in the project, then in a
+ * dependency.  The standard library is not on disk.
+ */
+function moduleFile(imp, names, from, { exists, root, dependencies }) {
   if (names.length === 0) return undefined;
   const here = path.dirname(from);
   let dirs;
@@ -44,12 +54,14 @@ function moduleFile(imp, names, from, { exists, root }) {
   else if (imp.base === 'relative') dirs = [path.resolve(here, ...Array(imp.up).fill('..'))];
   else dirs = [here, path.join(here, 'lib'), root, path.join(root, 'lib')];
   for (const dir of dirs) {
-    const stem = path.join(dir, ...names);
-    for (const candidate of [`${stem}.aion`, path.join(stem, 'lib.aion'), path.join(stem, `${names.at(-1)}.aion`)]) {
-      if (exists(candidate)) return candidate;
-    }
+    const found = moduleCandidates(dir, names).find(exists);
+    if (found) return found;
   }
-  return undefined;
+  const dependency = imp.base === 'root' || imp.base === 'relative' ? undefined : dependencies?.get(names[0]);
+  if (!dependency) return undefined;
+  // `import http` is the package's library; `import http.parser` a file in it.  `import http.get` (a name the
+  // library holds) is left to the caller, which then tries `import http`.
+  return names.length === 1 ? dependency.library : moduleCandidates(dependency.dir, names.slice(1)).find(exists);
 }
 
 /**
@@ -143,7 +155,7 @@ const inComment = (text, start) => mask(text, true)[start] === ' ';
  * @param {string} request.text  its text
  * @param {SymbolIndex} request.index
  * @param {(file: string) => boolean} request.exists
- * @param {string} request.root  the project folder
+ * @param {string} request.root  the project folder; its dependencies are found through its `aion.project`
  */
 function findDefinitions({ file, text, line, character, index, exists, root }) {
   const here = index.get(file, text);
@@ -156,7 +168,7 @@ function findDefinitions({ file, text, line, character, index, exists, root }) {
   const word = text.slice(start, end);
   if (!word || /^\d/.test(word) || inComment(text, start)) return [];
 
-  const ctx = { index, exists, root };
+  const ctx = { index, exists, root, dependencies: dependencyRoots(root, index.read, exists) };
   const imp = here.imports.find((i) => start >= i.start && start <= i.end);
   if (imp) return importTarget(imp, start, here, ctx);
 
