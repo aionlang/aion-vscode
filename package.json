@@ -38,6 +38,17 @@
         ],
         "firstLine": "^#!.*\baion\b",
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "aion-project",
+        "aliases": [
+          "Aion Project",
+          "aion.project"
+        ],
+        "filenames": [
+          "aion.project"
+        ],
+        "configuration": "./aion-project-configuration.json"
       }
     ],
     "grammars": [
@@ -45,6 +56,11 @@
         "language": "aion",
         "scopeName": "source.aion",
         "path": "./syntaxes/aion.tmLanguage.json"
+      },
+      {
+        "language": "aion-project",
+        "scopeName": "source.aion-project",
+        "path": "./syntaxes/aion-project.tmLanguage.json"
       }
     ]
   },
