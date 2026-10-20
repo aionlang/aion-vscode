@@ -37,7 +37,11 @@
           ".aion"
         ],
         "firstLine": "^#!.*\baion\b",
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/aion.svg",
+          "dark": "./icons/aion.svg"
+        }
       },
       {
         "id": "aion-project",
@@ -48,7 +52,11 @@
         "filenames": [
           "aion.project"
         ],
-        "configuration": "./aion-project-configuration.json"
+        "configuration": "./aion-project-configuration.json",
+        "icon": {
+          "light": "./icons/aion-project.svg",
+          "dark": "./icons/aion-project.svg"
+        }
       }
     ],
     "grammars": [
