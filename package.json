@@ -169,7 +169,57 @@
         "mac": "cmd+alt+r",
         "when": "editorLangId == aion"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Aion",
+      "properties": {
+        "aion.path": {
+          "type": "string",
+          "default": "aion",
+          "scope": "machine-overridable",
+          "description": "The Aion compiler to run: a command on PATH, or the full path to the executable."
+        },
+        "aion.compilerArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Options for the compiler when running or building a file, such as [\"-O3\", \"--no-trace\"]."
+        },
+        "aion.run.programArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Arguments passed to the program by Run Aion File; the program reads them with args()."
+        },
+        "aion.run.command": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "A command line that Run Aion File sends to the terminal instead of running `aion run`. Variables: `${aion}` (the compiler, see `aion.path`), `${file}`, `${fileDirname}`, `${fileBasename}`, `${fileBasenameNoExtension}` and `${workspaceFolder}`. Example: `${aion} run -O3 ${file}`. Leave empty to run the file as a VS Code task."
+        },
+        "aion.saveBeforeRun": {
+          "type": "boolean",
+          "default": true,
+          "description": "Save the file before running, building or checking it."
+        },
+        "aion.check.run": {
+          "type": "string",
+          "enum": [
+            "onSave",
+            "never"
+          ],
+          "enumDescriptions": [
+            "Run `aion check` when an Aion file is opened or saved and show its problems.",
+            "Only check when the Check Aion File command is used."
+          ],
+          "default": "onSave",
+          "description": "When to type-check Aion files."
+        }
+      }
+    }
   },
   "scripts": {
     "test": "node --test \"test/*.test.js\""
