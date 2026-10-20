@@ -26,35 +26,35 @@
     ["'", "'"],
     ["<", ">"]
   ],
-  "wordPattern": "[A-Za-z_][A-Za-z0-9_]*|-?\d[\d_]*(\.\d[\d_]*)?",
+  "wordPattern": "[A-Za-z_][A-Za-z0-9_]*|-?\\d[\\d_]*(\\.\\d[\\d_]*)?",
   "indentationRules": {
-    "increaseIndentPattern": "^.*\{[^}\"']*$|^.*\([^)\"']*$|^.*\[[^\]\"']*$",
-    "decreaseIndentPattern": "^\s*[}\])].*$"
+    "increaseIndentPattern": "^.*\\{[^}\"']*$|^.*\\([^)\"']*$|^.*\\[[^\\]\"']*$",
+    "decreaseIndentPattern": "^\\s*[}\\])].*$"
   },
   "onEnterRules": [
     {
-      "beforeText": "^\s*/\*\*(?!/)([^\*]|\*(?!/))*$",
-      "afterText": "^\s*\*/$",
+      "beforeText": "^\\s*/\\*\\*(?!/)([^\\*]|\\*(?!/))*$",
+      "afterText": "^\\s*\\*/$",
       "action": { "indent": "indentOutdent", "appendText": " * " }
     },
     {
-      "beforeText": "^\s*/\*\*(?!/)([^\*]|\*(?!/))*$",
+      "beforeText": "^\\s*/\\*\\*(?!/)([^\\*]|\\*(?!/))*$",
       "action": { "indent": "none", "appendText": " * " }
     },
     {
-      "beforeText": "^(\t|[ ])*[ ]\*([ ]([^\*]|\*(?!/))*)?$",
-      "previousLineText": "(?=^(\s*(/\*\*|\*)).*)(?=(?!(\s*\*/)))",
+      "beforeText": "^(\\t|[ ])*[ ]\\*([ ]([^\\*]|\\*(?!/))*)?$",
+      "previousLineText": "(?=^(\\s*(/\\*\\*|\\*)).*)(?=(?!(\\s*\\*/)))",
       "action": { "indent": "none", "appendText": "* " }
     },
     {
-      "beforeText": "^(\t|[ ])*[ ]\*/\s*$",
+      "beforeText": "^(\\t|[ ])*[ ]\\*/\\s*$",
       "action": { "indent": "none", "removeText": 1 }
     }
   ],
   "folding": {
     "markers": {
-      "start": "^\s*//\s*#?region\b",
-      "end": "^\s*//\s*#?endregion\b"
+      "start": "^\\s*//\\s*#?region\\b",
+      "end": "^\\s*//\\s*#?endregion\\b"
     }
   }
 }
