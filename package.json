@@ -62,6 +62,12 @@
         "scopeName": "source.aion-project",
         "path": "./syntaxes/aion-project.tmLanguage.json"
       }
+    ],
+    "snippets": [
+      {
+        "language": "aion",
+        "path": "./snippets/aion.json"
+      }
     ]
   },
   "scripts": {
