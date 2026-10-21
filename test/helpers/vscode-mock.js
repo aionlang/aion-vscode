@@ -36,6 +36,7 @@ class Diagnostic {
 const Uri = {
   file: (fsPath) => ({ scheme: 'file', fsPath, toString: () => `file:///${fsPath.replace(/\\/g, '/')}` }),
   parse(text) {
+    if (/^https?:/.test(text)) return { scheme: 'https', fsPath: text, toString: () => text };
     const fsPath = text.replace(/^file:\/\/\//, '').replace(/\//g, path.sep);
     return Uri.file(fsPath);
   },
@@ -48,6 +49,8 @@ function create(config = {}) {
     diagnostics: new Map(),
     warnings: [],
     informations: [],
+    opened: [],
+    pick: undefined,
     executedTasks: [],
     terminals: [],
     sent: [],
@@ -85,7 +88,14 @@ function create(config = {}) {
         Object.assign(this, { definition, scope, name, source, execution, problemMatchers });
       }
     },
+    env: {
+      openExternal: (uri) => {
+        state.opened.push(uri.toString());
+        return Promise.resolve(true);
+      },
+    },
     window: {
+      showQuickPick: (items) => Promise.resolve(state.pick ? items.find((i) => i.label === state.pick) : undefined),
       activeTextEditor: undefined,
       createOutputChannel: () => ({ lines: [], appendLine(l) { this.lines.push(l); }, dispose() {} }),
       showWarningMessage: (message, ...items) => {

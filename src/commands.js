@@ -5,6 +5,7 @@ const { isAion } = require('./diagnostics');
 const { createTask } = require('./tasks');
 const { getBinary } = require('./environment');
 const { expand, variablesFor } = require('./template');
+const { PAGES, pageFor } = require('./docs');
 
 const settings = () => vscode.workspace.getConfiguration('aion');
 
@@ -39,6 +40,24 @@ function runInTerminal(template, document) {
 
 function scopeFor(document) {
   return vscode.workspace.getWorkspaceFolder(document.uri) ?? vscode.TaskScope.Workspace;
+}
+
+const open = (url) => vscode.env.openExternal(vscode.Uri.parse(url));
+
+/** Ask which documentation page to open. */
+async function pickPage() {
+  const choice = await vscode.window.showQuickPick(PAGES, { placeHolder: 'Open the Aion documentation' });
+  if (choice) await open(choice.url);
+}
+
+/** The documentation for the word under the cursor, or the list of pages if there is none for it. */
+async function searchDocumentation() {
+  const editor = vscode.window.activeTextEditor;
+  const range = editor?.document.getWordRangeAtPosition(editor.selection.active);
+  const word = range ? editor.document.getText(range) : '';
+  const url = word ? pageFor(word) : undefined;
+  if (url) await open(url);
+  else await pickPage();
 }
 
 /** @returns {vscode.Disposable[]} */
@@ -77,6 +96,8 @@ function registerCommands(checker) {
     vscode.commands.registerCommand('aion.format', () =>
       vscode.commands.executeCommand('editor.action.formatDocument'),
     ),
+    vscode.commands.registerCommand('aion.openDocumentation', pickPage),
+    vscode.commands.registerCommand('aion.searchDocumentation', searchDocumentation),
     vscode.commands.registerCommand('aion.repl', () => {
       const terminal = vscode.window.createTerminal({
         name: 'Aion REPL',

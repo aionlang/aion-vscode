@@ -117,6 +117,17 @@
         "title": "Open Aion REPL",
         "category": "Aion",
         "icon": "$(terminal)"
+      },
+      {
+        "command": "aion.openDocumentation",
+        "title": "Open Documentation",
+        "category": "Aion",
+        "icon": "$(book)"
+      },
+      {
+        "command": "aion.searchDocumentation",
+        "title": "Search Documentation for the Word at the Cursor",
+        "category": "Aion"
       }
     ],
     "menus": {
@@ -308,6 +319,8 @@
   "activationEvents": [
     "onLanguage:aion",
     "onCommand:aion.repl",
+    "onCommand:aion.openDocumentation",
+    "onCommand:aion.searchDocumentation",
     "onCommand:aion.test"
   ]
 }
