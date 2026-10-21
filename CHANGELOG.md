@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Highlight the format spec of `${value:spec}` in string interpolation.
 - Add the commands **Open Documentation** and **Search Documentation for the Word at the Cursor**, which open the online documentation.
 
 ## 0.3.0

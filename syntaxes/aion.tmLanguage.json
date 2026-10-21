@@ -124,7 +124,7 @@
           "beginCaptures": { "0": { "name": "punctuation.section.interpolation.begin.aion" } },
           "endCaptures": { "0": { "name": "punctuation.section.interpolation.end.aion" } },
           "contentName": "source.aion",
-          "patterns": [{ "include": "#interpolation-braces" }, { "include": "$self" }]
+          "patterns": [{ "include": "#format-spec" }, { "include": "#interpolation-braces" }, { "include": "$self" }]
         },
         {
           "name": "meta.interpolation.aion",
@@ -135,6 +135,14 @@
           }
         }
       ]
+    },
+    "format-spec": {
+      "comment": "${value:spec}: [[fill]align][+][0][width][,][.precision][type] right before the closing brace",
+      "match": "(?<=[^\\s?:])(:)((?:.?[<>^])?\\+?0?\\d*,?(?:\\.\\d*)?[dfxXbosg]?)(?=\\})",
+      "captures": {
+        "1": { "name": "punctuation.separator.format-spec.aion" },
+        "2": { "name": "constant.other.format-spec.aion" }
+      }
     },
     "interpolation-braces": {
       "begin": "\\{",

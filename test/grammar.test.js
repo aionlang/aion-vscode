@@ -158,6 +158,15 @@ test('interpolation holds nested strings and braces', async () => {
   assert.equal(tokens.at(-2).scopes.at(-1), 'string.quoted.double.aion');
 });
 
+test('a format spec in an interpolation is told from the colon of a conditional', async () => {
+  const tokens = await tokenizeLine('"${price:>8.2f} ${ok ? "y" : "n"} ${n:,}"');
+  assert.equal(scopeOf(tokens, ':'), 'punctuation.separator.format-spec.aion');
+  assert.equal(scopeOf(tokens, '>8.2f'), 'constant.other.format-spec.aion');
+  assert.equal(scopeOf(tokens, ','), 'constant.other.format-spec.aion');
+  assert.equal(tokens.filter((t) => t.scopes.includes('constant.other.format-spec.aion')).length, 2);
+  assert.equal(scopeOf(tokens, 'price'), 'source.aion');
+});
+
 test('triple-quoted strings span lines and hold quotes', async () => {
   const { lines, balanced } = await tokenize('s := """He said "hi" to $name\nand left"""\nx := 1');
   assert.ok(balanced);
