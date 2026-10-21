@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add the commands **Open Documentation** and **Search Documentation for the Word at the Cursor**, which open the online documentation.
+
 ## 0.3.0
 
 - Go to Definition follows imports into dependencies: `path` dependencies, and git dependencies downloaded into the project's `aion-dependencies/` folder by `aion install` (the folder is named in `packages` in `aion.project`, the commit comes from `aion.lock`). Git dependencies in the shared cache, and the dependencies of a dependency, are not followed.

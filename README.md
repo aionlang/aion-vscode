@@ -11,10 +11,16 @@ Language support for [Aion](https://github.com/aionlang/aion), the scripting-sty
 - **Problems** from `aion check`, shown in the editor when a file is opened or saved.
 - **Run Aion File**: a play button in the editor title bar (like the Python extension), the editor and explorer context menus, the command palette, and <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd> (<kbd>Cmd</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd> on macOS).
 - **Build Aion File**, **Check Aion File**, **Run Aion Tests** and **Open Aion REPL** commands.
+- **Documentation links**: **Open Documentation** lists the pages of the [online documentation](https://aionlang.github.io/documentation); **Search Documentation for the Word at the Cursor** opens the page for a keyword, type or standard-library module (`when`, `enum`, `defer`, `regex`, …).
 - **Format Document** through `aion fmt`, so format-on-save works.
 - **Tasks**: an `aion` task type with a problem matcher, so errors from a build link back to the code.
 - **Snippets** for functions, types, `when`, loops, `try`, tasks and more.
 - Bracket matching, auto-closing pairs, comment toggling, indentation and `// region` folding.
+
+## Documentation
+
+- [Online documentation](https://aionlang.github.io/documentation): [getting started](https://aionlang.github.io/documentation/getting-started), [syntax](https://aionlang.github.io/documentation/syntax), [types](https://aionlang.github.io/documentation/types), [functions](https://aionlang.github.io/documentation/functions), [prelude methods](https://aionlang.github.io/documentation/prelude-methods), [standard library](https://aionlang.github.io/documentation/stdlib), [errors and concurrency](https://aionlang.github.io/documentation/errors-and-concurrency) and [packages and C bindings](https://aionlang.github.io/documentation/packages-and-ffi).
+- In the compiler repository: the [language reference](https://github.com/aionlang/aion/blob/main/docs/language.md), [projects and dependencies](https://github.com/aionlang/aion/blob/main/docs/projects.md) and the [examples](https://github.com/aionlang/aion/tree/main/examples).
 
 ## Requirements
 
